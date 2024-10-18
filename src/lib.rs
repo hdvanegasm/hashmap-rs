@@ -136,7 +136,10 @@ impl<'a, K, V> Iterator for HashIter<'a, K, V> {
         loop {
             match self.map.buckets.get(self.current_bucket) {
                 Some(bucket) => match bucket.get(self.current_item) {
-                    Some((k, v)) => break Some((k, v)),
+                    Some((k, v)) => {
+                        self.current_item += 1;
+                        break Some((k, v));
+                    }
                     None => {
                         self.current_bucket += 1;
                         self.current_item = 0;
